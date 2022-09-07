@@ -8,7 +8,7 @@ from osgeo import gdal
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    filename = req.params.get('filename')
+    filename = ' '.join(req.params.get('filename'))
     if not filename:
         try:
             req_body = req.get_json()

@@ -21,11 +21,9 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         ds = gdal.Open(fname)
         band = ds.GetRasterBand(1)
         stats = band.GetStatistics(0, 1)
-
-    return stats 
-        return func.HttpResponse("Hello, {name}. This HTTP triggered function executed successfully.")
+        return func.HttpResponse(stats)
     else:
         return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+             "Please pass a filename in the query string as in ../api/geo_handler?filename=sometif",
              status_code=200
         )

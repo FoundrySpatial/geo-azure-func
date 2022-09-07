@@ -18,6 +18,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             filename = req_body.get('filename')
 
     if filename:
+        logging.info ('\n>>>>>>> received request to open filename(' + filename + ')')
         ds = gdal.Open(filename)
         band = ds.GetRasterBand(1)
         stats = band.GetStatistics(0, 1)

@@ -2,20 +2,27 @@ import logging
 
 import azure.functions as func
 
+from osgeo import gdal
+
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    name = req.params.get('name')
-    if not name:
+    filename = req.params.get('filename')
+    if not filename:
         try:
             req_body = req.get_json()
         except ValueError:
             pass
         else:
-            name = req_body.get('name')
+            filename = req_body.get('filename')
 
-    if name:
+    if filename:
+        ds = gdal.Open(fname)
+        band = ds.GetRasterBand(1)
+        stats = band.GetStatistics(0, 1)
+
+    return stats 
         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
     else:
         return func.HttpResponse(

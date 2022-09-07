@@ -7,6 +7,8 @@ RUN apt-get install -y build-essential git autoconf libtool flex bison cmake mak
 
 ENV PREFIX /opt
 
+RUN export PREFIX=/opt
+
 WORKDIR /opt
 
 ENV LD_LIBRARY_PATH $PREFIX/lib:$LD_LIBRARY_PATH
@@ -375,6 +377,8 @@ RUN for i in $PREFIX/bin/*; do patchelf --force-rpath --set-rpath '$ORIGIN/../li
 COPY scripts/* /usr/local/bin/
 
 RUN export GDAL_VERSION=$(gdal-config --version)
+
+RUN pip install --global-option=build_ext --global-option="-I/opt/include" GDAL==`/opt/bin/gdal-config --version`
 
 # ENV \
 #   GDAL_DATA=$PREFIX/share/gdal \

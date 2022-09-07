@@ -22,7 +22,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
         ds = gdal.Open(filename)
         band = ds.GetRasterBand(1)
         stats = band.GetStatistics(0, 1)
-        retstats = ''.join([str(x) for x in stats])
+        retstats = ' '.join([str(x) for x in stats])
         return func.HttpResponse(retstats)
     else:
         return func.HttpResponse(
